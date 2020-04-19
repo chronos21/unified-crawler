@@ -16,7 +16,7 @@ app.get('/function', async (req, res) => {
             status = 'SUCCESS'
         }
     } catch (err) {
-        console.log(err)
+        status = 'ERROR'
     }
     res.json({ data, status, query})
 
