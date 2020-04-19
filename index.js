@@ -5,7 +5,7 @@ const app = express()
 const PORT = process.env.PORT || 8080
 
 app.get('/function', async (req, res) => {
-    let query = ['type (plugin)', 'name (function)', 'key (parameter)', ]
+    let query = ['type (plugin)', 'name (function)', 'key (parameter)',]
     let data = 'Check your query!';
     let status = 'CHECK'
     try {
@@ -18,7 +18,7 @@ app.get('/function', async (req, res) => {
     } catch (err) {
         status = 'ERROR'
     }
-    res.json({ data, status, query})
+    res.json({ data, status, query })
 
 })
 
@@ -27,14 +27,15 @@ app.get('/plugins', (req, res) => {
     let query = ['type (plugin)']
     let status = 'SUCCESS'
     let { type } = req.query
-    if (type) {
-        data = Object.keys(plugins[type])
-        if(data.length === 0){
-            data = 'Check your query!'
-            status = 'CHECK'
+    try {
+        if (type) {
+            data = Object.keys(plugins[type])
         }
+    } catch (err) {
+        data = 'Check your query!'
+        status = 'CHECK'
     }
-    res.json({ data, status, query})
+    res.json({ data, status, query })
 })
 
 app.listen(PORT, () => {
