@@ -52,7 +52,7 @@ const Mangakisa = {
 
     getSeries: async function (url) {
         if (!url.includes(MAIN_URL) ) {
-            if(url.includes('/')){
+            if(!url.includes('/')){
                 url = `${MAIN_URL}/${url}`;
             } else {
                 url = MAIN_URL + url;
@@ -85,7 +85,7 @@ const Mangakisa = {
     getSeriesDetail: async function (url) {
         let res;
         let arr = [];
-        
+
         try{
              res = await axios.get(url);
         } catch(err){
