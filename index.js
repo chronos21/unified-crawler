@@ -5,34 +5,36 @@ const app = express()
 const PORT = process.env.PORT || 8080
 
 app.get('/function', async (req, res) => {
+    let query = ['type (plugin)', 'name (function)', 'key (parameter)', ]
+    let data = 'Check your query!';
+    let status = 'CHECK'
     try {
-        let { cmd, q, type } = req.query
-        let handler = plugins[type][cmd]
-        let data = 'Check your query!';
-        let status = 'CHECK'
+        let { name, key, type } = req.query
+        let handler = plugins[type][name]
         if (handler) {
-            data = await handler(q)
+            data = await handler(key)
             status = 'SUCCESS'
         }
-        res.json({ data, status })
     } catch (err) {
-        console.log(req)
-        res.status(500).end()
+        console.log(err)
     }
+    res.json({ data, status, query})
+
 })
 
 app.get('/plugins', (req, res) => {
-    try {
-        let { type } = req.query
-        let data = Object.keys(plugins)
-        if (type) {
-            data = Object.keys(plugins[type])
+    let data = Object.keys(plugins)
+    let query = ['type (plugin)']
+    let status = 'SUCCESS'
+    let { type } = req.query
+    if (type) {
+        data = Object.keys(plugins[type])
+        if(data.length === 0){
+            data = 'Check your query!'
+            status = 'CHECK'
         }
-        res.json({ data })
-    } catch (err) {
-        res.status(500).end()
     }
-
+    res.json({ data, status, query})
 })
 
 app.listen(PORT, () => {
