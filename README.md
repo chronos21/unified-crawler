@@ -1,3 +1,3 @@
 # unified-crawler
 
-Extandable crawler/downloader for image and video.
+Extendable crawler/downloader for image and video.
